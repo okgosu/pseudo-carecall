@@ -132,6 +132,61 @@ tbody tr:hover { background: #fafafa; }
 .pagination { display: flex; justify-content: center; margin-top: 16px; }
 .page-btn { width: 28px; height: 28px; border: 1px solid var(--border); background: var(--green); color: #fff; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
 
+/* ===== DETAIL PANEL ===== */
+.detail-overlay {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 420px; background: #fff;
+  border-left: 1px solid var(--border);
+  box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+  display: flex; flex-direction: column;
+  z-index: 200;
+}
+.detail-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; justify-content: space-between;
+}
+.detail-name { font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.detail-phone { font-size: 13px; color: var(--text-mid); }
+.detail-org { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+.close-btn { background: none; border: none; cursor: pointer; font-size: 18px; color: var(--text-light); padding: 0 4px; line-height:1; }
+.detail-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 20px; gap: 4px; }
+.detail-tab {
+  padding: 10px 14px; font-size: 13px; cursor: pointer;
+  color: var(--text-mid); border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.detail-tab.active { color: var(--green); border-bottom-color: var(--green); font-weight: 500; }
+.detail-tab-btn {
+  padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer;
+  font-size: 12px; font-family: inherit; font-weight: 500;
+}
+.detail-tab-btn.primary { background: var(--green); color: #fff; }
+.detail-tab-btn.outline { background: #fff; color: var(--text-mid); border: 1px solid var(--border); }
+.detail-actions { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-bottom: 1px solid var(--border); }
+.detail-body { flex: 1; overflow-y: auto; padding: 0; display: flex; flex-direction: column; }
+.detail-memo { padding: 16px 20px; border-left: 3px solid var(--border); color: var(--text-light); font-size: 12px; margin: 16px 20px; border-radius: 0 4px 4px 0; background: #fafafa; }
+.audio-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 20px; border-bottom: 1px solid #f0f0f0; background: #fafafa;
+}
+.play-btn { width: 28px; height: 28px; border-radius: 50%; background: var(--green); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.audio-track { flex: 1; height: 4px; background: #e0e0e0; border-radius: 2px; position: relative; }
+.audio-progress { width: 0%; height: 100%; background: var(--green); border-radius: 2px; }
+.audio-time { font-size: 11px; color: var(--text-light); }
+.chat-list { padding: 12px 20px; display: flex; flex-direction: column; gap: 14px; }
+.chat-msg { display: flex; flex-direction: column; gap: 3px; }
+.chat-sender { font-size: 11px; font-weight: 600; color: var(--green); display: flex; align-items: center; gap: 4px; }
+.chat-sender::before { content: '♦'; font-size: 8px; }
+.chat-bubble {
+  max-width: 78%; padding: 10px 13px; border-radius: 12px;
+  font-size: 12px; line-height: 1.6; color: var(--text-dark);
+}
+.chat-bubble.ai { background: #f0f0f0; align-self: flex-start; border-radius: 4px 12px 12px 12px; }
+.chat-bubble.user { background: var(--green); color: #fff; align-self: flex-end; border-radius: 12px 4px 12px 12px; }
+.chat-time { font-size: 10px; color: var(--text-light); }
+.chat-time.right { text-align: right; }
+.memo-panel { padding: 16px 20px; font-size: 13px; color: var(--text-light); }
+.edit-icon { background: none; border: none; cursor: pointer; color: var(--text-light); }
+
 /* ===== MONTHLY TABLE ===== */
 .month-table th { background: #fafafa; }
 .month-group-th { text-align: center; padding: 8px 12px; border-bottom: 1px solid var(--border); font-weight: 500; color: var(--text-mid); font-size: 12px; }
@@ -545,15 +600,15 @@ svg { flex-shrink: 0; }
             </tr>
           </thead>
           <tbody>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>김 * 동</td><td>010****3453</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td></td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>박 * 수</td><td>010****1324</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td></td><td></td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>이 * 자</td><td>010****6443</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td></td><td class="text-red">N</td><td class="link-red">___ ___</td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>최 * 가</td><td>010****8678</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-red">N</td><td class="text-red">N</td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>정 * 의</td><td>010****9694</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>조 * 순</td><td>010****1343</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>김 * 금</td><td>010****8975</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>이 * 병</td><td>010****3430</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
-            <tr><td><input type="checkbox" class="chk"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>박 * 호</td><td>010****9143</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-red">N</td><td></td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('김 * 동','010****1339')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>김 * 동</td><td>010****3453</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td></td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('박 * 수','010****1324')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>박 * 수</td><td>010****1324</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td></td><td></td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('이 * 자','010****6443')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>이 * 자</td><td>010****6443</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td></td><td class="text-red">N</td><td class="link-red">___ ___</td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('최 * 가','010****8678')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>최 * 가</td><td>010****8678</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-red">N</td><td class="text-red">N</td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('정 * 의','010****9694')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>정 * 의</td><td>010****9694</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('조 * 순','010****1343')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>조 * 순</td><td>010****1343</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('김 * 금','010****8975')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>김 * 금</td><td>010****8975</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('이 * 병','010****3430')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>이 * 병</td><td>010****3430</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-blue">Y</td><td class="text-light">-</td><td></td><td class="text-light">-</td></tr>
+            <tr class="detail-row" onclick="openDetail('박 * 호','010****9143')" style="cursor:pointer;"><td><input type="checkbox" class="chk" onclick="event.stopPropagation()"></td><td>질병관리청</td><td>경북권질병대응센터</td><td>2026.3.17 10:30</td><td>054****1339</td><td>2 회</td><td>박 * 호</td><td>010****9143</td><td>통화 종료</td><td>Y</td><td>1 차</td><td>02:30</td><td class="text-red">N</td><td></td><td class="link-blue">도움요청 ___</td><td class="text-light">-</td></tr>
           </tbody>
         </table>
       </div>
@@ -732,11 +787,160 @@ svg { flex-shrink: 0; }
   </div>
 </div>
 
+<!-- ================================================================
+     DETAIL PANEL OVERLAY (캠페인 현황 → 행 클릭 시 오버레이)
+================================================================ -->
+<div id="detail-panel" class="detail-overlay" style="display:none;">
+  <div class="detail-header">
+    <div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div>
+          <div class="detail-name" id="detail-name">김 * 동</div>
+          <div class="detail-phone" id="detail-phone">010****1339</div>
+        </div>
+      </div>
+      <div class="detail-org">질병관리청</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button class="edit-icon" title="메모 편집">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+      <button class="close-btn" onclick="closeDetail()">✕</button>
+    </div>
+  </div>
+
+  <div class="detail-tabs">
+    <div class="detail-tab active" onclick="switchTab('tab-call', this)">통화 내용</div>
+    <div class="detail-tab" onclick="switchTab('tab-extra', this)">기이 내용</div>
+    <div class="detail-tab" onclick="switchTab('tab-followup', this)">후속 조치</div>
+  </div>
+
+  <!-- 통화 내용 탭 -->
+  <div id="tab-call" class="detail-body">
+    <!-- 오디오 바 -->
+    <div class="audio-bar">
+      <button class="play-btn" onclick="togglePlay(this)">
+        <svg width="10" height="12" viewBox="0 0 10 12" fill="white"><path d="M0 0l10 6-10 6z"/></svg>
+      </button>
+      <div class="audio-track"><div class="audio-progress" id="audio-progress"></div></div>
+      <span class="audio-time">00:00 / 01:41</span>
+    </div>
+
+    <div class="chat-list">
+      <div class="chat-msg">
+        <div class="chat-sender">AI</div>
+        <div class="chat-bubble ai">안녕하세요. 저는 인공지능 클로바 돌봄이에요. 결핵약 복용 확인차 전화 드렸습니다. 김 * 동님 맞으신가요?</div>
+        <div class="chat-time">오전 11:30:13</div>
+      </div>
+      <div class="chat-msg" style="align-items:flex-end;">
+        <div class="chat-bubble user">네 맞습니다.</div>
+        <div class="chat-time right">오전 11:30:23</div>
+      </div>
+      <div class="chat-msg">
+        <div class="chat-sender">AI</div>
+        <div class="chat-bubble ai">네, 지금 통화 괜찮으세요?</div>
+        <div class="chat-time">오전 11:30:25</div>
+      </div>
+      <div class="chat-msg" style="align-items:flex-end;">
+        <div class="chat-bubble user">네 괜찮아요.</div>
+        <div class="chat-time right">오전 11:30:28</div>
+      </div>
+      <div class="chat-msg">
+        <div class="chat-sender">AI</div>
+        <div class="chat-bubble ai">네, 결핵약은 잘 드시고 계시는지 궁금해서 전화드렸어요. 오늘 결핵약 드셨나요?</div>
+        <div class="chat-time">오전 11:30:31</div>
+      </div>
+      <div class="chat-msg" style="align-items:flex-end;">
+        <div class="chat-bubble user">네 먹었어요.</div>
+        <div class="chat-time right">오전 11:30:38</div>
+      </div>
+      <div class="chat-msg">
+        <div class="chat-sender">AI</div>
+        <div class="chat-bubble ai">잘하셨어요. 혹시 불편하신 점은 없으세요?</div>
+        <div class="chat-time">오전 11:30:41</div>
+      </div>
+      <div class="chat-msg" style="align-items:flex-end;">
+        <div class="chat-bubble user">조금 약 먹고 나서 됐을 것 같긴 한데요.</div>
+        <div class="chat-time right">오전 11:30:46</div>
+      </div>
+      <div class="chat-msg">
+        <div class="chat-sender">AI</div>
+        <div class="chat-bubble ai">그러셨군요. 혹시 다른 증상은 없으셨나요?</div>
+        <div class="chat-time">오전 11:30:51</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기이 내용 탭 -->
+  <div id="tab-extra" class="detail-body" style="display:none;">
+    <div class="memo-panel" style="color:var(--text-light);font-size:13px;padding-top:40px;text-align:center;">
+      추가 기이 내용이 없습니다.
+    </div>
+  </div>
+
+  <!-- 후속 조치 탭 -->
+  <div id="tab-followup" class="detail-body" style="display:none;">
+    <div style="padding:20px;">
+      <div style="font-size:12px;color:var(--text-light);margin-bottom:8px;">등록된 메모 내용이 없습니다.</div>
+    </div>
+  </div>
+
+  <!-- 메모 영역 -->
+  <div style="padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+    <span style="font-size:12px;color:var(--text-light);">메모</span>
+    <button class="edit-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+  </div>
+  <div class="detail-memo">등록된 메모 내용이 없습니다.</div>
+</div>
+
+<!-- dim overlay -->
+<div id="detail-dim" onclick="closeDetail()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.15);z-index:199;"></div>
+
 <script>
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0, 0);
+  closeDetail();
+}
+
+function openDetail(name, phone) {
+  document.getElementById('detail-name').textContent = name;
+  document.getElementById('detail-phone').textContent = phone;
+  document.getElementById('detail-panel').style.display = 'flex';
+  document.getElementById('detail-dim').style.display = 'block';
+  // reset to first tab
+  switchTab('tab-call', document.querySelector('.detail-tab'));
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').style.display = 'none';
+  document.getElementById('detail-dim').style.display = 'none';
+}
+
+function switchTab(tabId, el) {
+  document.querySelectorAll('.detail-body').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).style.display = 'flex';
+  if (el) el.classList.add('active');
+}
+
+let playing = false;
+let progress = 0;
+let timer = null;
+function togglePlay(btn) {
+  playing = !playing;
+  if (playing) {
+    btn.innerHTML = '<svg width="10" height="12" viewBox="0 0 16 16" fill="white"><rect x="2" y="1" width="4" height="14"/><rect x="10" y="1" width="4" height="14"/></svg>';
+    timer = setInterval(() => {
+      progress = Math.min(progress + 0.5, 100);
+      document.getElementById('audio-progress').style.width = progress + '%';
+      if (progress >= 100) { clearInterval(timer); playing = false; btn.innerHTML = '<svg width="10" height="12" viewBox="0 0 10 12" fill="white"><path d="M0 0l10 6-10 6z"/></svg>'; progress = 0; }
+    }, 500);
+  } else {
+    clearInterval(timer);
+    btn.innerHTML = '<svg width="10" height="12" viewBox="0 0 10 12" fill="white"><path d="M0 0l10 6-10 6z"/></svg>';
+  }
 }
 </script>
 </body>
